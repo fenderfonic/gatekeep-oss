@@ -28,9 +28,9 @@ domains:
   - security-misconfiguration
 
 enforced_by:
-  - willy      # Security review
-  - ralph      # Code review
-  - flanders   # Production gate
+  - sentinel   # Security review
+  - reviewer   # Code review
+  - guardian   # Production gate
 
 files:
   - top10.yaml

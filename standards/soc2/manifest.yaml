@@ -30,15 +30,11 @@ trust_services_criteria:
 
 domains:
   - security
-  - availability
-  - confidentiality
 
 enforced_by:
-  - willy      # Security controls
-  - burns      # Cost of compliance
-  - flanders   # Production compliance
+  - sentinel   # Security controls
+  - auditor    # Cost of compliance
+  - guardian   # Production compliance
 
 files:
   - security.yaml
-  - availability.yaml
-  - confidentiality.yaml

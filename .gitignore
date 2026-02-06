@@ -39,6 +39,9 @@ wheels/
 # Kiro (keep steering, exclude settings)
 .kiro/settings/
 
+# Internal planning
+ROADMAP.md
+
 # Testing
 .pytest_cache/
 .coverage

@@ -56,7 +56,8 @@ def load_standard(standard_id: str) -> dict[str, Any]:
         return {}
 
     standard: dict[str, Any] = {"manifest": manifest, "domains": {}}
-    for filename in manifest.get("standard", {}).get("files", []):
+    files = manifest.get("standard", {}).get("files", []) or manifest.get("files", [])
+    for filename in files:
         domain_path = standard_dir / filename
         if domain_path.exists():
             domain_name = filename.replace(".yaml", "")

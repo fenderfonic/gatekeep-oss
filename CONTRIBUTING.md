@@ -42,19 +42,24 @@ Be respectful, inclusive, and professional. We're all here to build better gover
 git clone https://github.com/YOUR_USERNAME/gatekeep-oss.git
 cd gatekeep-oss
 
-# Run setup
-./scripts/setup.sh
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate
 
-# Activate environment
-source venv/bin/activate
+# Install in dev mode
+pip install -e ".[dev]"
 
-# Make changes and test
-./scripts/health-check.sh
+# Run tests
+pytest tests/ -v
+
+# Lint
+ruff check src/ tests/
+ruff format --check src/ tests/
 ```
 
 ## Coding Standards
 
-- **Python**: Follow PEP 8
+- **Python**: Follow PEP 8 (enforced by ruff)
 - **Type Hints**: Use type hints where appropriate
 - **Documentation**: Update docs for new features
 - **Tests**: Add tests for new functionality
@@ -63,57 +68,62 @@ source venv/bin/activate
 ## Project Structure
 
 ```
-gatekeep-intro/
-├── core/              # Core governance engine
-├── mcp-server/        # MCP integration
-├── integrations/      # External integrations (Slack, etc.)
-├── governance/        # Policies and standards
-├── scripts/           # Setup and utility scripts
-└── docs/              # Documentation
+gatekeep-oss/
+├── src/gatekeep/          # Core package
+│   ├── __init__.py        # Public API
+│   ├── cli.py             # CLI commands
+│   ├── loader.py          # YAML config loader
+│   ├── personas.py        # Persona engine (LLM integration)
+│   ├── governance/        # Bundled governance policies
+│   ├── personas/          # Bundled persona definitions
+│   └── standards/         # Bundled regulatory standards
+├── tests/                 # Test suite
+├── governance/            # Example project-level governance
+├── personas/              # Example project-level personas
+├── standards/             # Example project-level standards
+└── pyproject.toml         # Package configuration
 ```
 
 ## Adding New Features
 
 ### New Persona
 
-1. Add persona definition to `governance/personas/personas.yaml`
-2. Update MCP server to expose new tools
-3. Document the persona's role and usage
+1. Add persona definition to `src/gatekeep/personas/personas.yaml`
+2. Include required fields: character, domain, role, model, emoji, traits
+3. Assign governance files and standards as needed
 4. Add tests
+5. Document the persona in README.md
 
 ### New Standard
 
-1. Create standard directory in `governance/standards/`
-2. Add manifest.yaml and control files
-3. Update documentation
-4. Test with existing personas
+1. Create standard directory in `src/gatekeep/standards/<standard-id>/`
+2. Add `manifest.yaml` with standard metadata and file list
+3. Add control YAML files referenced in the manifest
+4. Update `standards/versions.yaml`
+5. Test with `gatekeep standards status`
 
-### New Integration
+### New Governance Policy
 
-1. Create directory in `integrations/`
-2. Add README with setup instructions
-3. Update main setup script if needed
-4. Document integration flow
+1. Add YAML file to `src/gatekeep/governance/`
+2. Assign to relevant personas in `personas.yaml`
+3. Document the policy structure
 
 ## Testing
 
-Before submitting a PR:
-
 ```bash
-# Run health check
-./scripts/health-check.sh
+# Run all tests
+pytest tests/ -v
 
-# Test MCP integration
-# (restart Kiro and test persona consultations)
+# Run specific test file
+pytest tests/test_loader.py -v
 
-# Test Slack integration (if applicable)
-python integrations/slack/slack_bot.py
+# Run with coverage
+pytest tests/ --cov=gatekeep --cov-report=term-missing
 ```
 
 ## Documentation
 
 - Update README.md for user-facing changes
-- Update docs/ for detailed documentation
 - Add inline code comments for complex logic
 - Update CHANGELOG.md
 

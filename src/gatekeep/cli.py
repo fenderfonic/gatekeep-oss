@@ -150,9 +150,7 @@ def personas():
         model = config.get("model", "unknown")
         if "/" in model:
             model = model.split("/")[-1]
-        table.add_row(
-            config.get("emoji", "👤"), name, config.get("role", ""), config.get("domain", ""), model
-        )
+        table.add_row(config.get("emoji", "👤"), name, config.get("role", ""), config.get("domain", ""), model)
     console.print(table)
 
 
@@ -176,7 +174,11 @@ def standards_status():
         installed = info.get("installed") or "Not installed"
         latest = info.get("latest", "Unknown")
         status = info.get("status", "unknown")
-        style = {"current": "[green]✅ Current[/green]", "outdated": "[yellow]⚠️ Outdated[/yellow]", "not_installed": "[dim]Not installed[/dim]"}.get(status, status)
+        style = {
+            "current": "[green]✅ Current[/green]",
+            "outdated": "[yellow]⚠️ Outdated[/yellow]",
+            "not_installed": "[dim]Not installed[/dim]",
+        }.get(status, status)
         table.add_row(sid, installed, latest, style)
     console.print(table)
 

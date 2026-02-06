@@ -32,21 +32,15 @@ applicability:
 domains:
   - iam
   - logging
-  - monitoring
-  - networking
-  - storage
 
 enforced_by:
-  - willy      # All security controls
-  - burns      # Cost implications
-  - flanders   # Production compliance
+  - sentinel   # All security controls
+  - auditor    # Cost implications
+  - guardian   # Production compliance
 
 files:
   - iam.yaml
   - logging.yaml
-  - monitoring.yaml
-  - networking.yaml
-  - storage.yaml
 
 levels:
   level1:

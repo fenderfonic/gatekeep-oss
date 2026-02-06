@@ -34,9 +34,9 @@ domains:
   - cross-border-transfer
 
 enforced_by:
-  - willy      # Technical security controls
-  - lisa       # UX for consent flows
-  - flanders   # Production compliance gate
+  - sentinel   # Technical security controls
+  - architect  # UX for consent flows
+  - guardian   # Production compliance gate
 
 files:
   - data-protection.yaml

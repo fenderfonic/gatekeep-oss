@@ -29,9 +29,7 @@ def get_api_key() -> str:
                     val = line.split("=", 1)[1].strip().strip('"').strip("'")
                     if val and val != "your_openrouter_api_key_here":
                         return val
-    raise ValueError(
-        "OPENROUTER_API_KEY not found. Set it as an environment variable or in a .env file."
-    )
+    raise ValueError("OPENROUTER_API_KEY not found. Set it as an environment variable or in a .env file.")
 
 
 _API_KEY: Optional[str] = None
@@ -44,10 +42,10 @@ def build_system_prompt(persona_name: str) -> str:
         raise ValueError(f"Unknown persona: {persona_name}")
 
     config = data["config"]
-    prompt = f"""You are {config['character']}, providing {config['domain']} guidance.
+    prompt = f"""You are {config["character"]}, providing {config["domain"]} guidance.
 
 CHARACTER TRAITS:
-{config['traits']}
+{config["traits"]}
 
 """
     if data["governance_text"] != "No specific governance rules loaded.":
@@ -68,9 +66,7 @@ CHARACTER TRAITS:
     return prompt
 
 
-async def query_llm(
-    model: str, system_prompt: str, user_prompt: str, context: Optional[str] = None
-) -> str:
+async def query_llm(model: str, system_prompt: str, user_prompt: str, context: Optional[str] = None) -> str:
     """Query an LLM via OpenRouter."""
     global _API_KEY
     if not _API_KEY:
@@ -101,9 +97,7 @@ async def query_llm(
             return result["choices"][0]["message"]["content"]
 
 
-async def consult_persona(
-    persona_name: str, question: str, context: Optional[str] = None
-) -> str:
+async def consult_persona(persona_name: str, question: str, context: Optional[str] = None) -> str:
     """Consult a persona with a question."""
     config = get_persona_config(persona_name)
     if not config:
@@ -117,9 +111,7 @@ async def consult_persona(
     return await query_llm(model, system_prompt, question, context)
 
 
-async def _consensus_review(
-    persona_name: str, question: str, context: Optional[str] = None
-) -> str:
+async def _consensus_review(persona_name: str, question: str, context: Optional[str] = None) -> str:
     """Multi-LLM consensus review (Reviewer's specialty)."""
     config = get_persona_config(persona_name)
     models = config.get("models", ["anthropic/claude-3.5-sonnet", "openai/gpt-4o"])
@@ -170,9 +162,7 @@ async def team_review(content: str, context: Optional[str] = None) -> dict[str, 
     return results
 
 
-async def deployment_gate(
-    deployment_plan: str, environment: str, context: Optional[str] = None
-) -> dict[str, Any]:
+async def deployment_gate(deployment_plan: str, environment: str, context: Optional[str] = None) -> dict[str, Any]:
     """Run a full deployment gate check with cost, security, and approval stages."""
     check_tasks = {
         "auditor": consult_persona("auditor", f"Cost check for deployment: {deployment_plan}", context),
@@ -182,7 +172,9 @@ async def deployment_gate(
     checks = dict(zip(check_tasks.keys(), check_responses))
 
     approver = "guardian" if environment.lower() == "production" else "tester"
-    approval_ctx = f"Cost: {checks.get('auditor', 'Error')}\nSecurity: {checks.get('sentinel', 'Error')}\n{context or ''}"
+    approval_ctx = (
+        f"Cost: {checks.get('auditor', 'Error')}\nSecurity: {checks.get('sentinel', 'Error')}\n{context or ''}"
+    )
     approval = await consult_persona(
         approver, f"Approve deployment to {environment}?\n\nPlan: {deployment_plan}", approval_ctx
     )
