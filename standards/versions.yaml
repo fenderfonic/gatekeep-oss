@@ -1,0 +1,50 @@
+# Standards Version Tracking
+# Tracks installed standards and their versions
+# Monitored for updates
+
+version: "1.0"
+last_checked: "2026-01-23"
+
+standards:
+  gdpr:
+    installed: "2016/679"
+    latest: "2016/679"
+    status: current
+    source: "https://gdpr.eu/"
+    
+  cis-aws-2.0:
+    installed: "2.0.0"
+    latest: "2.0.0"
+    status: current
+    source: "https://www.cisecurity.org/benchmark/amazon_web_services"
+    
+  soc2:
+    installed: "2017"
+    latest: "2017"
+    status: current
+    source: "https://www.aicpa.org/soc2"
+    note: "Security criteria implemented, availability/confidentiality pending"
+    
+  owasp-top10:
+    installed: "2021"
+    latest: "2021"
+    status: current
+    source: "https://owasp.org/Top10/"
+    
+  hipaa:
+    installed: null
+    latest: "2013"
+    status: not_installed
+    source: "https://www.hhs.gov/hipaa/"
+    
+  pci-dss:
+    installed: null
+    latest: "4.0"
+    status: not_installed
+    source: "https://www.pcisecuritystandards.org/"
+
+# Update schedule
+review_schedule:
+  frequency: "quarterly"
+  next_review: "2026-04-01"
+  notify: ["smithers"]

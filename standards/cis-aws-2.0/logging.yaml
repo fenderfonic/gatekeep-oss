@@ -1,0 +1,140 @@
+# CIS AWS Benchmark - Logging Controls
+# Section 3: Logging
+
+domain: logging
+version: "2.0.0"
+section: "3"
+
+controls:
+  # 3.1 - CloudTrail enabled
+  - id: "CIS-AWS-3.1"
+    title: "Ensure CloudTrail is enabled in all regions"
+    level: 1
+    scored: true
+    severity: critical
+    requirement: "CloudTrail must be enabled in all regions"
+    rationale: "Provides audit trail of all API activity"
+    check: |
+      aws cloudtrail describe-trails --query 'trailList[*].{Name:Name,IsMultiRegion:IsMultiRegionTrail}'
+    remediation: |
+      aws cloudtrail create-trail --name my-trail --s3-bucket-name my-bucket --is-multi-region-trail
+
+  # 3.2 - CloudTrail log validation
+  - id: "CIS-AWS-3.2"
+    title: "Ensure CloudTrail log file validation is enabled"
+    level: 2
+    scored: true
+    severity: high
+    requirement: "Enable log file integrity validation"
+    rationale: "Detects tampering with log files"
+    check: |
+      aws cloudtrail describe-trails --query 'trailList[*].{Name:Name,LogFileValidation:LogFileValidationEnabled}'
+
+  # 3.3 - CloudTrail S3 bucket not public
+  - id: "CIS-AWS-3.3"
+    title: "Ensure CloudTrail S3 bucket is not publicly accessible"
+    level: 1
+    scored: true
+    severity: critical
+    requirement: "CloudTrail bucket must be private"
+    check: |
+      aws s3api get-bucket-acl --bucket <cloudtrail-bucket>
+      aws s3api get-bucket-policy --bucket <cloudtrail-bucket>
+
+  # 3.4 - CloudTrail integrated with CloudWatch
+  - id: "CIS-AWS-3.4"
+    title: "Ensure CloudTrail trails are integrated with CloudWatch Logs"
+    level: 1
+    scored: true
+    severity: high
+    requirement: "Send CloudTrail logs to CloudWatch"
+    rationale: "Enables real-time monitoring and alerting"
+    check: |
+      aws cloudtrail describe-trails --query 'trailList[*].{Name:Name,CloudWatchLogsLogGroupArn:CloudWatchLogsLogGroupArn}'
+
+  # 3.5 - AWS Config enabled
+  - id: "CIS-AWS-3.5"
+    title: "Ensure AWS Config is enabled in all regions"
+    level: 1
+    scored: true
+    severity: high
+    requirement: "Enable AWS Config in all regions"
+    rationale: "Tracks configuration changes"
+    check: |
+      aws configservice describe-configuration-recorders
+
+  # 3.6 - S3 bucket logging
+  - id: "CIS-AWS-3.6"
+    title: "Ensure S3 bucket access logging is enabled on CloudTrail S3 bucket"
+    level: 1
+    scored: true
+    severity: medium
+    requirement: "Enable access logging on CloudTrail bucket"
+    check: |
+      aws s3api get-bucket-logging --bucket <cloudtrail-bucket>
+
+  # 3.7 - CloudTrail encryption
+  - id: "CIS-AWS-3.7"
+    title: "Ensure CloudTrail logs are encrypted at rest using KMS CMKs"
+    level: 2
+    scored: true
+    severity: high
+    requirement: "Encrypt CloudTrail logs with KMS"
+    check: |
+      aws cloudtrail describe-trails --query 'trailList[*].{Name:Name,KmsKeyId:KmsKeyId}'
+
+  # 3.8 - KMS key rotation
+  - id: "CIS-AWS-3.8"
+    title: "Ensure rotation for customer created CMKs is enabled"
+    level: 2
+    scored: true
+    severity: medium
+    requirement: "Enable automatic key rotation"
+    check: |
+      aws kms list-keys --query 'Keys[*].KeyId' | \
+      xargs -I {} aws kms get-key-rotation-status --key-id {}
+
+  # 3.9 - VPC Flow Logs
+  - id: "CIS-AWS-3.9"
+    title: "Ensure VPC flow logging is enabled in all VPCs"
+    level: 2
+    scored: true
+    severity: high
+    requirement: "Enable VPC Flow Logs"
+    rationale: "Captures network traffic metadata"
+    check: |
+      aws ec2 describe-vpcs --query 'Vpcs[*].VpcId' | \
+      xargs -I {} aws ec2 describe-flow-logs --filter Name=resource-id,Values={}
+
+  # 3.10 - Object-level logging
+  - id: "CIS-AWS-3.10"
+    title: "Ensure object-level logging for write events is enabled"
+    level: 2
+    scored: true
+    severity: medium
+    requirement: "Enable S3 object-level logging for writes"
+    check: |
+      aws cloudtrail get-event-selectors --trail-name <trail-name>
+
+  # 3.11 - Object-level read logging
+  - id: "CIS-AWS-3.11"
+    title: "Ensure object-level logging for read events is enabled"
+    level: 2
+    scored: true
+    severity: medium
+    requirement: "Enable S3 object-level logging for reads"
+
+log_retention:
+  description: "Log retention requirements"
+  controls:
+    - id: "CIS-AWS-LOG-001"
+      requirement: "Retain CloudTrail logs for at least 90 days"
+      severity: high
+      
+    - id: "CIS-AWS-LOG-002"
+      requirement: "Archive logs to S3 for long-term retention"
+      severity: medium
+      
+    - id: "CIS-AWS-LOG-003"
+      requirement: "Protect logs from deletion"
+      severity: high

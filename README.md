@@ -1,0 +1,152 @@
+# Gatekeep
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![PyPI](https://img.shields.io/pypi/v/gatekeep.svg)](https://pypi.org/project/gatekeep/)
+
+**AI-powered governance for development teams.**
+
+Gatekeep enforces security, cost, architecture, and compliance standards through specialized AI personas. Each persona is a domain expert that reviews your work, catches issues early, and keeps your team consistent — all from the CLI.
+
+```bash
+pip install gatekeep
+```
+
+## Quick Start
+
+```bash
+# Install
+pip install gatekeep
+
+# Set your OpenRouter API key
+export OPENROUTER_API_KEY=sk-or-...
+
+# Ask a persona
+gatekeep ask sentinel "Is storing passwords in plaintext safe?"
+gatekeep ask auditor "What will 3 Lambda functions at 256MB cost monthly?"
+gatekeep ask architect "Should I use DynamoDB or RDS for this use case?"
+
+# Run a full team review
+gatekeep review "New payment API with Stripe integration"
+
+# Check deployment readiness
+gatekeep deploy "API v2.0 release" --env production
+```
+
+## The Personas
+
+| Persona | Role | What They Do |
+|---------|------|-------------|
+| 🧭 **Guide** | Triage | Routes your question to the right specialist |
+| 👁️ **Reviewer** | Peer Review | Multi-LLM consensus code review |
+| 💰 **Auditor** | Cost Control | Budget enforcement and optimization |
+| 🔒 **Sentinel** | Security | Vulnerability detection and hardening |
+| 🎨 **Architect** | Design | Architecture patterns and best practices |
+| 🧪 **Tester** | Test Gate | Test environment deployment approval |
+| 🛡️ **Guardian** | Prod Gate | Production deployment approval |
+| 📊 **Observer** | Metrics | Routing, observability, optimization |
+
+Each persona has a distinct personality, enforces specific governance rules, and uses the optimal LLM model for their domain.
+
+## How It Works
+
+Gatekeep uses a two-layer governance model:
+
+```
+Your Question
+     ↓
+┌─────────────────────────────────┐
+│  PERSONAS (AI Specialists)      │
+│  Sentinel, Auditor, Architect…  │
+└─────────────────────────────────┘
+     ↓                ↓
+┌──────────┐  ┌──────────────────┐
+│ Your     │  │ Regulatory       │
+│ Policies │  │ Standards        │
+│          │  │                  │
+│ security │  │ OWASP Top 10    │
+│ cost     │  │ CIS AWS 2.0     │
+│ arch     │  │ GDPR / SOC 2    │
+└──────────┘  └──────────────────┘
+```
+
+**Layer 1 — Governance (your rules):** Customizable YAML policies for security, cost control, and architecture that reflect your organization's standards.
+
+**Layer 2 — Standards (external regulations):** Built-in support for OWASP Top 10, CIS AWS 2.0, GDPR, and SOC 2. Personas automatically enforce applicable standards.
+
+## CLI Commands
+
+```bash
+gatekeep ask <persona> <question>    # Consult a specific persona
+gatekeep review <content>            # Parallel team review (Auditor + Sentinel + Architect)
+gatekeep deploy <plan> --env <env>   # Deployment gate check
+gatekeep route <question>            # Let Guide pick the right persona
+gatekeep personas                    # List all personas
+gatekeep standards status            # Show installed standards
+gatekeep init                        # Initialize Gatekeep in your project
+```
+
+## Project Setup
+
+Initialize Gatekeep in any project to customize governance rules:
+
+```bash
+cd my-project
+gatekeep init
+```
+
+This creates:
+- `governance/` — Your security, cost, and architecture policies (editable YAML)
+- `personas/` — Persona definitions (add your own or tweak existing ones)
+- `standards/` — Regulatory standards (OWASP, CIS, GDPR, SOC 2)
+- `gatekeep.yaml` — Project configuration
+
+## Customizing Governance
+
+Edit the YAML files in `governance/` to match your organization:
+
+```yaml
+# governance/security.yaml
+secrets:
+  storage:
+    aws:
+      primary: "AWS Secrets Manager"
+  rotation: "90 days minimum"
+
+encryption:
+  in_transit: "TLS 1.2+ required"
+  at_rest: "Enable for all storage"
+```
+
+```yaml
+# governance/cost-control.yaml
+budgets:
+  global:
+    monthly_limit: 100
+    currency: "USD"
+```
+
+Personas automatically pick up your governance rules and enforce them in their responses.
+
+## Requirements
+
+- Python 3.11+
+- [OpenRouter API key](https://openrouter.ai/) (provides access to Claude, GPT-4, and other models)
+
+Typical API cost: $1–5/month for individual developers.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for reporting vulnerabilities.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+---
+
+**Ship safely, not slowly.** 🚀

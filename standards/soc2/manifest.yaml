@@ -1,0 +1,44 @@
+# SOC 2 - Trust Services Criteria
+# AICPA Service Organization Control 2
+
+standard:
+  id: "soc2"
+  name: "SOC 2 Trust Services Criteria"
+  version: "2017"
+  effective_date: "2017-04-01"
+  source: "https://www.aicpa.org/soc2"
+  last_reviewed: "2026-01-23"
+
+description: |
+  SOC 2 is an auditing procedure that ensures service providers securely 
+  manage data to protect the interests of the organization and the privacy 
+  of its clients. Based on five Trust Services Criteria.
+
+applicability:
+  triggers:
+    - "Handling customer data"
+    - "Providing SaaS services"
+    - "Processing sensitive information"
+    - "Enterprise customers requiring compliance"
+
+trust_services_criteria:
+  - security
+  - availability
+  - processing_integrity
+  - confidentiality
+  - privacy
+
+domains:
+  - security
+  - availability
+  - confidentiality
+
+enforced_by:
+  - willy      # Security controls
+  - burns      # Cost of compliance
+  - flanders   # Production compliance
+
+files:
+  - security.yaml
+  - availability.yaml
+  - confidentiality.yaml

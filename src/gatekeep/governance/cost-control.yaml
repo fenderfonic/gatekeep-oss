@@ -1,0 +1,68 @@
+# Cost Control Policies
+# Your organizational budget rules
+# Owner: Finance Team
+
+version: "2.0"
+last_updated: "2026-01-23"
+
+budgets:
+  global:
+    monthly_limit: 100
+    currency: "USD"
+    alert_thresholds:
+      - percent: 50
+        action: "notify"
+      - percent: 80
+        action: "warn"
+      - percent: 95
+        action: "block new resources"
+
+  per_project:
+    default_limit: 20
+    overrides: {}  # Define per-project in springfield.yaml
+
+optimization:
+  compute:
+    right_sizing: required
+    spot_instances: "preferred for non-critical"
+    auto_scaling: required
+    idle_shutdown: "after 1 hour"
+
+  storage:
+    lifecycle_policies: required
+    intelligent_tiering: preferred
+    glacier_for_archives: "after 90 days"
+
+  networking:
+    cloudfront_for_static: preferred
+    vpc_endpoints: "for AWS services"
+
+tagging:
+  required:
+    - key: "Project"
+    - key: "Environment"
+    - key: "ManagedBy"
+    - key: "CostCenter"
+    - key: "Owner"
+  enforcement: "block untagged resources"
+
+monitoring:
+  frequency: "daily"
+  anomaly_detection:
+    enabled: true
+    threshold: "20% increase"
+
+cleanup:
+  automated:
+    dev_resources_ttl: "7 days"
+    unused_eips: "release immediately"
+    unattached_volumes: "delete after 7 days"
+    cloudwatch_logs: "delete after 30 days"
+
+  manual_review: "weekly"
+
+emergency:
+  kill_switch:
+    enabled: true
+    trigger: "budget exceeded by 20%"
+    action: "stop non-production resources"

@@ -1,0 +1,116 @@
+# GDPR Consent Requirements
+# Articles 7, 8
+
+domain: consent
+version: "1.0"
+articles: ["7", "8"]
+
+requirements:
+  valid_consent:
+    article: "7"
+    description: "Conditions for valid consent"
+    controls:
+      - id: "GDPR-CON-001"
+        requirement: "Consent must be freely given"
+        severity: critical
+        guidance: |
+          - No bundling with service access
+          - No imbalance of power
+          - Granular options for different purposes
+        
+      - id: "GDPR-CON-002"
+        requirement: "Consent must be specific"
+        severity: critical
+        guidance: |
+          - Separate consent for each purpose
+          - Clear description of each processing activity
+        
+      - id: "GDPR-CON-003"
+        requirement: "Consent must be informed"
+        severity: critical
+        guidance: |
+          - Identity of controller
+          - Purpose of processing
+          - Type of data collected
+          - Right to withdraw
+        
+      - id: "GDPR-CON-004"
+        requirement: "Consent must be unambiguous"
+        severity: critical
+        guidance: |
+          - Clear affirmative action required
+          - No pre-ticked boxes
+          - No silence or inactivity as consent
+        
+      - id: "GDPR-CON-005"
+        requirement: "Consent must be withdrawable"
+        severity: critical
+        guidance: |
+          - Easy to withdraw as to give
+          - Inform of right before consent
+          - Withdrawal doesn't affect prior processing
+
+  demonstrable_consent:
+    article: "7(1)"
+    description: "Controller must demonstrate consent was given"
+    controls:
+      - id: "GDPR-CON-010"
+        requirement: "Record consent with timestamp"
+        severity: high
+        
+      - id: "GDPR-CON-011"
+        requirement: "Record what user was told"
+        severity: high
+        
+      - id: "GDPR-CON-012"
+        requirement: "Record how consent was given"
+        severity: medium
+
+  children_consent:
+    article: "8"
+    description: "Conditions for children's consent"
+    controls:
+      - id: "GDPR-CON-020"
+        requirement: "Verify age before processing children's data"
+        severity: critical
+        guidance: "Default age threshold is 16 (member states may lower to 13)"
+        
+      - id: "GDPR-CON-021"
+        requirement: "Obtain parental consent for children under threshold"
+        severity: critical
+        
+      - id: "GDPR-CON-022"
+        requirement: "Make reasonable efforts to verify parental consent"
+        severity: high
+
+ux_requirements:
+  description: "User experience requirements for consent"
+  controls:
+    - id: "GDPR-UX-001"
+      requirement: "Consent request must be clearly distinguishable"
+      severity: high
+      guidance: "Not buried in terms and conditions"
+      
+    - id: "GDPR-UX-002"
+      requirement: "Use clear and plain language"
+      severity: high
+      guidance: "Avoid legal jargon, be concise"
+      
+    - id: "GDPR-UX-003"
+      requirement: "Provide granular consent options"
+      severity: medium
+      guidance: "Allow users to consent to specific purposes"
+      
+    - id: "GDPR-UX-004"
+      requirement: "Make withdrawal equally easy"
+      severity: critical
+      guidance: "Same number of clicks to withdraw as to give"
+      
+    - id: "GDPR-UX-005"
+      requirement: "No dark patterns"
+      severity: critical
+      guidance: |
+        - No confusing double negatives
+        - No hidden decline options
+        - No guilt-tripping language
+        - Equal prominence for accept/decline

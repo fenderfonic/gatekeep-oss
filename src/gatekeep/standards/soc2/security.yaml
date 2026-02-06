@@ -1,0 +1,181 @@
+# SOC 2 - Security (Common Criteria)
+# Trust Services Criteria for Security
+
+domain: security
+version: "2017"
+category: "Common Criteria"
+
+description: |
+  The security category refers to the protection of information and systems 
+  from unauthorized access, unauthorized disclosure of information, and 
+  damage to systems that could compromise availability, integrity, 
+  confidentiality, and privacy.
+
+controls:
+  # CC1 - Control Environment
+  cc1_control_environment:
+    name: "Control Environment"
+    controls:
+      - id: "SOC2-CC1.1"
+        requirement: "Demonstrate commitment to integrity and ethical values"
+        severity: high
+        
+      - id: "SOC2-CC1.2"
+        requirement: "Board exercises oversight responsibility"
+        severity: medium
+        
+      - id: "SOC2-CC1.3"
+        requirement: "Management establishes structure and authority"
+        severity: medium
+        
+      - id: "SOC2-CC1.4"
+        requirement: "Demonstrate commitment to competence"
+        severity: medium
+        
+      - id: "SOC2-CC1.5"
+        requirement: "Enforce accountability"
+        severity: high
+
+  # CC2 - Communication and Information
+  cc2_communication:
+    name: "Communication and Information"
+    controls:
+      - id: "SOC2-CC2.1"
+        requirement: "Obtain relevant quality information"
+        severity: medium
+        
+      - id: "SOC2-CC2.2"
+        requirement: "Communicate internally"
+        severity: medium
+        
+      - id: "SOC2-CC2.3"
+        requirement: "Communicate externally"
+        severity: medium
+
+  # CC3 - Risk Assessment
+  cc3_risk_assessment:
+    name: "Risk Assessment"
+    controls:
+      - id: "SOC2-CC3.1"
+        requirement: "Specify suitable objectives"
+        severity: high
+        
+      - id: "SOC2-CC3.2"
+        requirement: "Identify and analyze risk"
+        severity: critical
+        
+      - id: "SOC2-CC3.3"
+        requirement: "Consider potential for fraud"
+        severity: high
+        
+      - id: "SOC2-CC3.4"
+        requirement: "Identify and assess changes"
+        severity: medium
+
+  # CC4 - Monitoring Activities
+  cc4_monitoring:
+    name: "Monitoring Activities"
+    controls:
+      - id: "SOC2-CC4.1"
+        requirement: "Select and develop ongoing evaluations"
+        severity: high
+        
+      - id: "SOC2-CC4.2"
+        requirement: "Evaluate and communicate deficiencies"
+        severity: high
+
+  # CC5 - Control Activities
+  cc5_control_activities:
+    name: "Control Activities"
+    controls:
+      - id: "SOC2-CC5.1"
+        requirement: "Select and develop control activities"
+        severity: critical
+        
+      - id: "SOC2-CC5.2"
+        requirement: "Select and develop technology controls"
+        severity: critical
+        
+      - id: "SOC2-CC5.3"
+        requirement: "Deploy through policies and procedures"
+        severity: high
+
+  # CC6 - Logical and Physical Access
+  cc6_access:
+    name: "Logical and Physical Access Controls"
+    controls:
+      - id: "SOC2-CC6.1"
+        requirement: "Implement logical access security software"
+        severity: critical
+        
+      - id: "SOC2-CC6.2"
+        requirement: "Register and authorize new users"
+        severity: critical
+        
+      - id: "SOC2-CC6.3"
+        requirement: "Remove access when no longer required"
+        severity: critical
+        
+      - id: "SOC2-CC6.4"
+        requirement: "Restrict physical access"
+        severity: high
+        
+      - id: "SOC2-CC6.5"
+        requirement: "Protect against environmental threats"
+        severity: medium
+        
+      - id: "SOC2-CC6.6"
+        requirement: "Implement boundary protection"
+        severity: critical
+        
+      - id: "SOC2-CC6.7"
+        requirement: "Restrict data transmission"
+        severity: high
+        
+      - id: "SOC2-CC6.8"
+        requirement: "Prevent unauthorized software"
+        severity: high
+
+  # CC7 - System Operations
+  cc7_operations:
+    name: "System Operations"
+    controls:
+      - id: "SOC2-CC7.1"
+        requirement: "Detect and monitor security events"
+        severity: critical
+        
+      - id: "SOC2-CC7.2"
+        requirement: "Monitor system components for anomalies"
+        severity: high
+        
+      - id: "SOC2-CC7.3"
+        requirement: "Evaluate security events"
+        severity: high
+        
+      - id: "SOC2-CC7.4"
+        requirement: "Respond to security incidents"
+        severity: critical
+        
+      - id: "SOC2-CC7.5"
+        requirement: "Recover from security incidents"
+        severity: critical
+
+  # CC8 - Change Management
+  cc8_change_management:
+    name: "Change Management"
+    controls:
+      - id: "SOC2-CC8.1"
+        requirement: "Authorize, design, develop, configure, document, test, approve, and implement changes"
+        severity: critical
+
+  # CC9 - Risk Mitigation
+  cc9_risk_mitigation:
+    name: "Risk Mitigation"
+    controls:
+      - id: "SOC2-CC9.1"
+        requirement: "Identify and manage vendor risk"
+        severity: high
+        
+      - id: "SOC2-CC9.2"
+        requirement: "Assess and manage business disruption risk"
+        severity: high

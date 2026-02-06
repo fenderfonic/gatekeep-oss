@@ -1,0 +1,112 @@
+# GDPR Breach Notification
+# Articles 33, 34
+
+domain: breach-notification
+version: "1.0"
+articles: ["33", "34"]
+
+authority_notification:
+  article: "33"
+  description: "Notification to supervisory authority"
+  timeline: "72 hours"
+  
+  controls:
+    - id: "GDPR-BRE-001"
+      requirement: "Notify authority within 72 hours of awareness"
+      severity: critical
+      guidance: |
+        - Clock starts when you become aware
+        - If >72 hours, must explain delay
+        - Can notify in phases if information incomplete
+      
+    - id: "GDPR-BRE-002"
+      requirement: "Document all breaches (even if not notified)"
+      severity: critical
+      
+    - id: "GDPR-BRE-003"
+      requirement: "Assess risk to individuals"
+      severity: critical
+      guidance: "No notification required if unlikely to result in risk"
+
+  notification_content:
+    required:
+      - "Nature of breach"
+      - "Categories and approximate number of data subjects"
+      - "Categories and approximate number of records"
+      - "Name and contact of DPO"
+      - "Likely consequences"
+      - "Measures taken or proposed"
+
+data_subject_notification:
+  article: "34"
+  description: "Notification to affected individuals"
+  trigger: "High risk to rights and freedoms"
+  
+  controls:
+    - id: "GDPR-BRE-010"
+      requirement: "Notify individuals without undue delay"
+      severity: critical
+      trigger: "When breach likely to result in high risk"
+      
+    - id: "GDPR-BRE-011"
+      requirement: "Use clear and plain language"
+      severity: high
+      
+    - id: "GDPR-BRE-012"
+      requirement: "Provide specific information about breach"
+      severity: critical
+
+  notification_content:
+    required:
+      - "Nature of breach in clear language"
+      - "Name and contact of DPO"
+      - "Likely consequences"
+      - "Measures taken"
+      - "Recommendations for individuals"
+
+  exceptions:
+    - "Data was encrypted/unintelligible"
+    - "Subsequent measures eliminated risk"
+    - "Disproportionate effort (use public communication)"
+
+incident_response:
+  description: "Incident response requirements"
+  controls:
+    - id: "GDPR-IR-001"
+      requirement: "Maintain incident response plan"
+      severity: critical
+      
+    - id: "GDPR-IR-002"
+      requirement: "Define breach detection mechanisms"
+      severity: high
+      
+    - id: "GDPR-IR-003"
+      requirement: "Define escalation procedures"
+      severity: high
+      
+    - id: "GDPR-IR-004"
+      requirement: "Conduct post-incident review"
+      severity: medium
+      
+    - id: "GDPR-IR-005"
+      requirement: "Test incident response annually"
+      severity: medium
+
+breach_register:
+  description: "Breach documentation requirements"
+  controls:
+    - id: "GDPR-REG-001"
+      requirement: "Maintain register of all breaches"
+      severity: critical
+      fields:
+        - "Date/time of breach"
+        - "Date/time of discovery"
+        - "Nature of breach"
+        - "Categories of data"
+        - "Number of records"
+        - "Number of individuals"
+        - "Consequences"
+        - "Remedial actions"
+        - "Notification decisions"
+        - "Authority notification (if any)"
+        - "Individual notification (if any)"

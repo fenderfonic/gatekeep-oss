@@ -1,0 +1,216 @@
+# OWASP Top 10 - 2021
+# Web Application Security Risks
+
+domain: top10
+version: "2021"
+
+risks:
+  A01_broken_access_control:
+    rank: 1
+    name: "Broken Access Control"
+    description: "Restrictions on authenticated users are not properly enforced"
+    controls:
+      - id: "OWASP-A01-001"
+        requirement: "Deny access by default"
+        severity: critical
+        
+      - id: "OWASP-A01-002"
+        requirement: "Implement access control mechanisms once, reuse throughout"
+        severity: high
+        
+      - id: "OWASP-A01-003"
+        requirement: "Enforce record ownership"
+        severity: critical
+        
+      - id: "OWASP-A01-004"
+        requirement: "Disable directory listing"
+        severity: medium
+        
+      - id: "OWASP-A01-005"
+        requirement: "Log access control failures, alert on repeated failures"
+        severity: high
+
+  A02_cryptographic_failures:
+    rank: 2
+    name: "Cryptographic Failures"
+    description: "Failures related to cryptography leading to sensitive data exposure"
+    controls:
+      - id: "OWASP-A02-001"
+        requirement: "Classify data and identify sensitive data"
+        severity: high
+        
+      - id: "OWASP-A02-002"
+        requirement: "Encrypt all sensitive data at rest"
+        severity: critical
+        
+      - id: "OWASP-A02-003"
+        requirement: "Encrypt all data in transit with TLS"
+        severity: critical
+        
+      - id: "OWASP-A02-004"
+        requirement: "Use strong, up-to-date algorithms"
+        severity: critical
+        
+      - id: "OWASP-A02-005"
+        requirement: "Do not use deprecated hash functions (MD5, SHA1)"
+        severity: critical
+
+  A03_injection:
+    rank: 3
+    name: "Injection"
+    description: "User-supplied data is not validated, filtered, or sanitized"
+    controls:
+      - id: "OWASP-A03-001"
+        requirement: "Use parameterized queries for SQL"
+        severity: critical
+        
+      - id: "OWASP-A03-002"
+        requirement: "Use positive server-side input validation"
+        severity: high
+        
+      - id: "OWASP-A03-003"
+        requirement: "Escape special characters"
+        severity: high
+        
+      - id: "OWASP-A03-004"
+        requirement: "Use LIMIT in SQL to prevent mass disclosure"
+        severity: medium
+
+  A04_insecure_design:
+    rank: 4
+    name: "Insecure Design"
+    description: "Missing or ineffective security controls in design"
+    controls:
+      - id: "OWASP-A04-001"
+        requirement: "Establish secure development lifecycle"
+        severity: high
+        
+      - id: "OWASP-A04-002"
+        requirement: "Use threat modeling for critical flows"
+        severity: medium
+        
+      - id: "OWASP-A04-003"
+        requirement: "Integrate security in user stories"
+        severity: medium
+
+  A05_security_misconfiguration:
+    rank: 5
+    name: "Security Misconfiguration"
+    description: "Missing security hardening or improperly configured permissions"
+    controls:
+      - id: "OWASP-A05-001"
+        requirement: "Implement hardened, repeatable configuration"
+        severity: high
+        
+      - id: "OWASP-A05-002"
+        requirement: "Remove unused features and frameworks"
+        severity: medium
+        
+      - id: "OWASP-A05-003"
+        requirement: "Review and update configurations regularly"
+        severity: medium
+        
+      - id: "OWASP-A05-004"
+        requirement: "Send security headers"
+        severity: high
+
+  A06_vulnerable_components:
+    rank: 6
+    name: "Vulnerable and Outdated Components"
+    description: "Using components with known vulnerabilities"
+    controls:
+      - id: "OWASP-A06-001"
+        requirement: "Remove unused dependencies"
+        severity: medium
+        
+      - id: "OWASP-A06-002"
+        requirement: "Continuously inventory component versions"
+        severity: high
+        
+      - id: "OWASP-A06-003"
+        requirement: "Monitor for vulnerabilities (CVE, NVD)"
+        severity: high
+        
+      - id: "OWASP-A06-004"
+        requirement: "Obtain components from official sources"
+        severity: high
+
+  A07_authentication_failures:
+    rank: 7
+    name: "Identification and Authentication Failures"
+    description: "Confirmation of user identity and session management weaknesses"
+    controls:
+      - id: "OWASP-A07-001"
+        requirement: "Implement multi-factor authentication"
+        severity: high
+        
+      - id: "OWASP-A07-002"
+        requirement: "Do not ship with default credentials"
+        severity: critical
+        
+      - id: "OWASP-A07-003"
+        requirement: "Implement weak password checks"
+        severity: high
+        
+      - id: "OWASP-A07-004"
+        requirement: "Limit failed login attempts"
+        severity: high
+        
+      - id: "OWASP-A07-005"
+        requirement: "Use secure session management"
+        severity: critical
+
+  A08_integrity_failures:
+    rank: 8
+    name: "Software and Data Integrity Failures"
+    description: "Code and infrastructure without integrity verification"
+    controls:
+      - id: "OWASP-A08-001"
+        requirement: "Use digital signatures to verify software"
+        severity: high
+        
+      - id: "OWASP-A08-002"
+        requirement: "Ensure CI/CD pipeline has proper access control"
+        severity: critical
+        
+      - id: "OWASP-A08-003"
+        requirement: "Do not send unsigned/unencrypted serialized data"
+        severity: high
+
+  A09_logging_monitoring_failures:
+    rank: 9
+    name: "Security Logging and Monitoring Failures"
+    description: "Insufficient logging, detection, monitoring, and response"
+    controls:
+      - id: "OWASP-A09-001"
+        requirement: "Log all login, access control, and input validation failures"
+        severity: high
+        
+      - id: "OWASP-A09-002"
+        requirement: "Ensure logs have sufficient context"
+        severity: medium
+        
+      - id: "OWASP-A09-003"
+        requirement: "Ensure logs are not vulnerable to injection"
+        severity: high
+        
+      - id: "OWASP-A09-004"
+        requirement: "Establish effective monitoring and alerting"
+        severity: high
+
+  A10_ssrf:
+    rank: 10
+    name: "Server-Side Request Forgery (SSRF)"
+    description: "Web application fetches remote resource without validating URL"
+    controls:
+      - id: "OWASP-A10-001"
+        requirement: "Sanitize and validate all client-supplied URLs"
+        severity: critical
+        
+      - id: "OWASP-A10-002"
+        requirement: "Enforce URL schema, port, and destination allowlist"
+        severity: high
+        
+      - id: "OWASP-A10-003"
+        requirement: "Do not send raw responses to clients"
+        severity: medium

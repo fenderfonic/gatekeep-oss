@@ -1,0 +1,98 @@
+# Architectural Standards
+# Your organizational architecture policies
+# Owner: Architecture Team
+
+version: "2.0"
+last_updated: "2026-01-23"
+
+principles:
+  simplicity: "Choose the simplest solution that works"
+  portability: "Run anywhere - local, AWS, GCP, Azure"
+  cost_efficiency: "Optimize for low operational cost"
+  consistency: "Same patterns across all projects"
+
+languages:
+  primary: "python"
+  python:
+    version: ">=3.11"
+    package_manager: "pip"
+    virtual_env: required
+    code_quality:
+      linting: "ruff"
+      formatting: "ruff format"
+      type_checking: "mypy"
+
+  secondary:
+    - name: "typescript"
+      use_case: "Frontend/mobile when appropriate"
+      version: ">=5.0"
+    - name: "bash"
+      use_case: "Automation scripts only"
+
+infrastructure:
+  iac_tool: "terraform"
+  terraform:
+    version: ">=1.5"
+    state_backend: "s3"
+    structure:
+      - "One terraform/ directory per project"
+      - "Separate files: main.tf, variables.tf, outputs.tf"
+
+  required_tags:
+    - Project
+    - Environment
+    - ManagedBy
+    - CostCenter
+
+applications:
+  deployment:
+    local: "Docker Compose or direct Python"
+    cloud: "Containers (ECS) or serverless (Lambda)"
+
+  patterns:
+    preferred:
+      - "Stateless applications"
+      - "12-factor app principles"
+      - "API-first design"
+    avoid:
+      - "Vendor lock-in"
+      - "Complex orchestration without justification"
+
+  apis:
+    framework: "FastAPI (Python)"
+    documentation: "OpenAPI auto-generated"
+    versioning: "URL-based (/v1/)"
+
+storage:
+  databases:
+    local: "SQLite or PostgreSQL in Docker"
+    cloud: "Managed PostgreSQL (RDS) or DynamoDB"
+  object_storage:
+    local: "Local filesystem"
+    cloud: "S3-compatible"
+
+containers:
+  base_images:
+    python: "python:3.11-slim"
+    node: "node:20-alpine"
+  practices:
+    - "Multi-stage builds"
+    - "Non-root user"
+    - "Health checks included"
+
+quality:
+  testing:
+    framework: "pytest"
+    coverage: "70%+ target"
+  documentation:
+    required:
+      - "README.md"
+      - "Architecture diagram"
+      - "API documentation"
+
+data_integrity:
+  mock_data: "NEVER USE MOCK DATA"
+  principles:
+    - "Real data or no data"
+    - "Empty states over fake data"
+    - "Mock data creates false confidence"

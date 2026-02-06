@@ -1,0 +1,185 @@
+# CIS AWS Benchmark - IAM Controls
+# Section 1: Identity and Access Management
+
+domain: iam
+version: "2.0.0"
+section: "1"
+
+controls:
+  # 1.1 - Contact Information
+  - id: "CIS-AWS-1.1"
+    title: "Maintain current contact details"
+    level: 1
+    scored: true
+    severity: medium
+    requirement: "Ensure contact email and phone are current"
+    rationale: "AWS uses contact info for security notifications"
+    remediation: "Update in AWS Account Settings"
+
+  # 1.4 - Root MFA
+  - id: "CIS-AWS-1.4"
+    title: "Ensure MFA is enabled for the root account"
+    level: 1
+    scored: true
+    severity: critical
+    requirement: "Root account must have MFA enabled"
+    rationale: "Root has unrestricted access to all resources"
+    check: |
+      aws iam get-account-summary --query 'SummaryMap.AccountMFAEnabled'
+    remediation: |
+      1. Sign in as root
+      2. Navigate to IAM > Security credentials
+      3. Enable MFA device
+
+  # 1.5 - Root Hardware MFA
+  - id: "CIS-AWS-1.5"
+    title: "Ensure hardware MFA is enabled for root"
+    level: 2
+    scored: true
+    severity: high
+    requirement: "Root account should use hardware MFA"
+    rationale: "Hardware MFA more secure than virtual"
+    check: |
+      aws iam list-virtual-mfa-devices --query 'VirtualMFADevices[?SerialNumber==`arn:aws:iam::*:mfa/root-account-mfa-device`]'
+
+  # 1.6 - No root access keys
+  - id: "CIS-AWS-1.6"
+    title: "Ensure no root access keys exist"
+    level: 1
+    scored: true
+    severity: critical
+    requirement: "Root account must not have access keys"
+    rationale: "Access keys provide programmatic access"
+    check: |
+      aws iam get-account-summary --query 'SummaryMap.AccountAccessKeysPresent'
+    remediation: "Delete root access keys in IAM console"
+
+  # 1.7 - Root usage
+  - id: "CIS-AWS-1.7"
+    title: "Eliminate use of root account"
+    level: 1
+    scored: true
+    severity: critical
+    requirement: "Root account should not be used for daily tasks"
+    rationale: "Reduces risk of credential compromise"
+    check: "Review CloudTrail for root usage"
+
+  # 1.8 - Password policy length
+  - id: "CIS-AWS-1.8"
+    title: "Ensure IAM password policy requires minimum length of 14"
+    level: 1
+    scored: true
+    severity: high
+    requirement: "Password minimum length >= 14 characters"
+    check: |
+      aws iam get-account-password-policy --query 'PasswordPolicy.MinimumPasswordLength'
+    remediation: |
+      aws iam update-account-password-policy --minimum-password-length 14
+
+  # 1.9 - Password reuse
+  - id: "CIS-AWS-1.9"
+    title: "Ensure IAM password policy prevents password reuse"
+    level: 1
+    scored: true
+    severity: medium
+    requirement: "Prevent reuse of last 24 passwords"
+    check: |
+      aws iam get-account-password-policy --query 'PasswordPolicy.PasswordReusePrevention'
+
+  # 1.10 - MFA for console users
+  - id: "CIS-AWS-1.10"
+    title: "Ensure MFA is enabled for all IAM users with console access"
+    level: 1
+    scored: true
+    severity: critical
+    requirement: "All console users must have MFA"
+    check: |
+      aws iam generate-credential-report
+      aws iam get-credential-report --query 'Content' --output text | base64 -d
+
+  # 1.11 - Access key rotation
+  - id: "CIS-AWS-1.11"
+    title: "Do not setup access keys during initial user setup"
+    level: 1
+    scored: false
+    severity: medium
+    requirement: "Create access keys only when needed"
+
+  # 1.12 - Unused credentials
+  - id: "CIS-AWS-1.12"
+    title: "Ensure credentials unused for 45 days are disabled"
+    level: 1
+    scored: true
+    severity: high
+    requirement: "Disable credentials not used in 45 days"
+    check: "Review credential report for last_used dates"
+
+  # 1.13 - Single active access key
+  - id: "CIS-AWS-1.13"
+    title: "Ensure there is only one active access key per user"
+    level: 1
+    scored: true
+    severity: medium
+    requirement: "Users should have at most one active access key"
+
+  # 1.14 - Access key rotation
+  - id: "CIS-AWS-1.14"
+    title: "Ensure access keys are rotated every 90 days"
+    level: 1
+    scored: true
+    severity: high
+    requirement: "Rotate access keys within 90 days"
+    check: "Review credential report for key ages"
+
+  # 1.15 - User permissions through groups
+  - id: "CIS-AWS-1.15"
+    title: "Ensure IAM users receive permissions through groups"
+    level: 1
+    scored: true
+    severity: medium
+    requirement: "No inline policies attached directly to users"
+    check: |
+      aws iam list-users --query 'Users[*].UserName' | \
+      xargs -I {} aws iam list-user-policies --user-name {}
+
+  # 1.16 - No full admin policies
+  - id: "CIS-AWS-1.16"
+    title: "Ensure IAM policies with full '*:*' admin privileges are not attached"
+    level: 1
+    scored: true
+    severity: critical
+    requirement: "No policies should grant *:* permissions"
+    rationale: "Violates principle of least privilege"
+    check: |
+      # Check all attached policies for *:* statements
+      aws iam list-policies --only-attached --query 'Policies[*].Arn'
+
+  # 1.17 - Support role
+  - id: "CIS-AWS-1.17"
+    title: "Ensure a support role has been created"
+    level: 1
+    scored: true
+    severity: low
+    requirement: "Create role for AWS Support access"
+    check: |
+      aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSSupportAccess
+
+  # 1.19 - Server certificates
+  - id: "CIS-AWS-1.19"
+    title: "Ensure expired SSL/TLS certificates are removed"
+    level: 1
+    scored: true
+    severity: high
+    requirement: "Remove expired certificates from IAM"
+    check: |
+      aws iam list-server-certificates --query 'ServerCertificateMetadataList[?Expiration<`2026-01-23`]'
+
+  # 1.20 - IAM Access Analyzer
+  - id: "CIS-AWS-1.20"
+    title: "Ensure IAM Access Analyzer is enabled"
+    level: 1
+    scored: true
+    severity: high
+    requirement: "Enable IAM Access Analyzer in all regions"
+    check: |
+      aws accessanalyzer list-analyzers --query 'analyzers[*].name'

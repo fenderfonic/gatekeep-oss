@@ -1,0 +1,153 @@
+# GDPR Data Protection Principles
+# Articles 5-11
+
+domain: data-protection
+version: "1.0"
+articles: ["5", "6", "7", "8", "9", "10", "11"]
+
+principles:
+  lawfulness_fairness_transparency:
+    article: "5(1)(a)"
+    description: "Personal data must be processed lawfully, fairly, and transparently"
+    controls:
+      - id: "GDPR-DP-001"
+        requirement: "Document legal basis for all personal data processing"
+        severity: critical
+        check: "Review data processing inventory for legal basis"
+        
+      - id: "GDPR-DP-002"
+        requirement: "Provide clear privacy notice at point of collection"
+        severity: critical
+        check: "Privacy notice visible before data collection"
+
+  purpose_limitation:
+    article: "5(1)(b)"
+    description: "Collect for specified, explicit, legitimate purposes only"
+    controls:
+      - id: "GDPR-PL-001"
+        requirement: "Define and document purpose for each data collection"
+        severity: high
+        
+      - id: "GDPR-PL-002"
+        requirement: "Do not process data for incompatible purposes"
+        severity: critical
+
+  data_minimization:
+    article: "5(1)(c)"
+    description: "Collect only data that is necessary"
+    controls:
+      - id: "GDPR-DM-001"
+        requirement: "Justify each data field collected"
+        severity: high
+        check: "Data inventory shows necessity for each field"
+        
+      - id: "GDPR-DM-002"
+        requirement: "Remove unnecessary data fields"
+        severity: medium
+
+  accuracy:
+    article: "5(1)(d)"
+    description: "Keep personal data accurate and up to date"
+    controls:
+      - id: "GDPR-AC-001"
+        requirement: "Implement data accuracy verification"
+        severity: medium
+        
+      - id: "GDPR-AC-002"
+        requirement: "Provide mechanism for users to update their data"
+        severity: high
+
+  storage_limitation:
+    article: "5(1)(e)"
+    description: "Keep data only as long as necessary"
+    controls:
+      - id: "GDPR-SL-001"
+        requirement: "Define retention periods for all data categories"
+        severity: high
+        
+      - id: "GDPR-SL-002"
+        requirement: "Implement automated deletion after retention period"
+        severity: medium
+        
+      - id: "GDPR-SL-003"
+        requirement: "Document retention policy"
+        severity: high
+
+  integrity_confidentiality:
+    article: "5(1)(f)"
+    description: "Ensure appropriate security of personal data"
+    controls:
+      - id: "GDPR-IC-001"
+        requirement: "Encrypt personal data at rest"
+        severity: critical
+        check: "Database encryption enabled"
+        
+      - id: "GDPR-IC-002"
+        requirement: "Encrypt personal data in transit (TLS 1.2+)"
+        severity: critical
+        check: "TLS configuration validated"
+        
+      - id: "GDPR-IC-003"
+        requirement: "Implement access controls for personal data"
+        severity: critical
+        
+      - id: "GDPR-IC-004"
+        requirement: "Log all access to personal data"
+        severity: high
+
+legal_basis:
+  article: "6"
+  description: "At least one legal basis required for processing"
+  options:
+    - id: "consent"
+      description: "Data subject has given consent"
+      requirements:
+        - "Freely given"
+        - "Specific"
+        - "Informed"
+        - "Unambiguous"
+        - "Withdrawable"
+        
+    - id: "contract"
+      description: "Necessary for contract performance"
+      
+    - id: "legal_obligation"
+      description: "Necessary for legal compliance"
+      
+    - id: "vital_interests"
+      description: "Necessary to protect vital interests"
+      
+    - id: "public_task"
+      description: "Necessary for public interest task"
+      
+    - id: "legitimate_interests"
+      description: "Necessary for legitimate interests"
+      requirements:
+        - "Document legitimate interest assessment"
+        - "Balance against data subject rights"
+
+special_categories:
+  article: "9"
+  description: "Special category data requires additional protections"
+  types:
+    - "Racial or ethnic origin"
+    - "Political opinions"
+    - "Religious or philosophical beliefs"
+    - "Trade union membership"
+    - "Genetic data"
+    - "Biometric data"
+    - "Health data"
+    - "Sex life or sexual orientation"
+  
+  controls:
+    - id: "GDPR-SC-001"
+      requirement: "Identify all special category data processing"
+      severity: critical
+      
+    - id: "GDPR-SC-002"
+      requirement: "Document explicit consent or legal exemption"
+      severity: critical
+      
+    - id: "GDPR-SC-003"
+      requirement: "Apply enhanced security measures"
+      severity: critical

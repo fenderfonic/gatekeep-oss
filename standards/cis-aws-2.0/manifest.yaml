@@ -1,0 +1,63 @@
+# CIS Amazon Web Services Foundations Benchmark
+# Version 2.0.0
+
+standard:
+  id: "cis-aws-2.0"
+  name: "CIS Amazon Web Services Foundations Benchmark"
+  version: "2.0.0"
+  effective_date: "2023-06-28"
+  source: "https://www.cisecurity.org/benchmark/amazon_web_services"
+  last_reviewed: "2026-01-23"
+
+description: |
+  The CIS AWS Foundations Benchmark provides prescriptive guidance for 
+  configuring security options for a subset of Amazon Web Services with 
+  an emphasis on foundational, testable, and architecture agnostic settings.
+
+applicability:
+  triggers:
+    - "Using AWS infrastructure"
+    - "Deploying to AWS cloud"
+  
+  services:
+    - "IAM"
+    - "S3"
+    - "EC2"
+    - "RDS"
+    - "CloudTrail"
+    - "CloudWatch"
+    - "VPC"
+    - "Lambda"
+
+domains:
+  - iam
+  - logging
+  - monitoring
+  - networking
+  - storage
+
+enforced_by:
+  - willy      # All security controls
+  - burns      # Cost implications
+  - flanders   # Production compliance
+
+files:
+  - iam.yaml
+  - logging.yaml
+  - monitoring.yaml
+  - networking.yaml
+  - storage.yaml
+
+levels:
+  level1:
+    description: "Essential security hygiene"
+    guidance: "Recommended for all AWS accounts"
+  level2:
+    description: "Defense in depth"
+    guidance: "For environments with heightened security requirements"
+
+scoring:
+  scored:
+    description: "Failure impacts benchmark score"
+  not_scored:
+    description: "Best practice, doesn't impact score"

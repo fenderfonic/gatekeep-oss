@@ -1,0 +1,170 @@
+# GDPR Data Subject Rights
+# Articles 12-23
+
+domain: data-subject-rights
+version: "1.0"
+articles: ["12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
+
+transparency:
+  article: "12"
+  description: "Transparent communication of rights"
+  controls:
+    - id: "GDPR-DSR-001"
+      requirement: "Provide information in concise, transparent, intelligible form"
+      severity: high
+      
+    - id: "GDPR-DSR-002"
+      requirement: "Respond to requests within one month"
+      severity: critical
+      
+    - id: "GDPR-DSR-003"
+      requirement: "Provide information free of charge"
+      severity: high
+
+rights:
+  right_to_be_informed:
+    articles: ["13", "14"]
+    description: "Right to know how data is used"
+    controls:
+      - id: "GDPR-INFO-001"
+        requirement: "Provide privacy notice at collection"
+        severity: critical
+        content:
+          - "Identity of controller"
+          - "Contact details of DPO"
+          - "Purposes of processing"
+          - "Legal basis"
+          - "Recipients of data"
+          - "Transfer intentions"
+          - "Retention period"
+          - "Data subject rights"
+          - "Right to withdraw consent"
+          - "Right to lodge complaint"
+
+  right_of_access:
+    article: "15"
+    description: "Right to obtain copy of personal data"
+    controls:
+      - id: "GDPR-ACC-001"
+        requirement: "Confirm whether data is being processed"
+        severity: critical
+        
+      - id: "GDPR-ACC-002"
+        requirement: "Provide copy of personal data"
+        severity: critical
+        
+      - id: "GDPR-ACC-003"
+        requirement: "Provide in commonly used electronic format"
+        severity: high
+
+  right_to_rectification:
+    article: "16"
+    description: "Right to correct inaccurate data"
+    controls:
+      - id: "GDPR-REC-001"
+        requirement: "Allow correction of inaccurate data"
+        severity: critical
+        
+      - id: "GDPR-REC-002"
+        requirement: "Allow completion of incomplete data"
+        severity: high
+
+  right_to_erasure:
+    article: "17"
+    description: "Right to be forgotten"
+    controls:
+      - id: "GDPR-ERA-001"
+        requirement: "Delete data when consent withdrawn"
+        severity: critical
+        
+      - id: "GDPR-ERA-002"
+        requirement: "Delete data when no longer necessary"
+        severity: critical
+        
+      - id: "GDPR-ERA-003"
+        requirement: "Delete data when unlawfully processed"
+        severity: critical
+        
+      - id: "GDPR-ERA-004"
+        requirement: "Inform third parties of erasure"
+        severity: high
+    
+    exceptions:
+      - "Freedom of expression"
+      - "Legal obligation"
+      - "Public health"
+      - "Archiving in public interest"
+      - "Legal claims"
+
+  right_to_restriction:
+    article: "18"
+    description: "Right to restrict processing"
+    controls:
+      - id: "GDPR-RES-001"
+        requirement: "Restrict processing when accuracy contested"
+        severity: high
+        
+      - id: "GDPR-RES-002"
+        requirement: "Restrict instead of erase when user prefers"
+        severity: medium
+
+  right_to_data_portability:
+    article: "20"
+    description: "Right to receive data in portable format"
+    controls:
+      - id: "GDPR-POR-001"
+        requirement: "Provide data in structured, machine-readable format"
+        severity: high
+        formats: ["JSON", "CSV", "XML"]
+        
+      - id: "GDPR-POR-002"
+        requirement: "Transmit directly to another controller if requested"
+        severity: medium
+
+  right_to_object:
+    article: "21"
+    description: "Right to object to processing"
+    controls:
+      - id: "GDPR-OBJ-001"
+        requirement: "Allow objection to direct marketing"
+        severity: critical
+        guidance: "Must stop immediately, no exceptions"
+        
+      - id: "GDPR-OBJ-002"
+        requirement: "Allow objection to legitimate interest processing"
+        severity: high
+
+  automated_decision_making:
+    article: "22"
+    description: "Rights related to automated decisions"
+    controls:
+      - id: "GDPR-AUTO-001"
+        requirement: "Right not to be subject to solely automated decisions"
+        severity: critical
+        
+      - id: "GDPR-AUTO-002"
+        requirement: "Right to human intervention"
+        severity: critical
+        
+      - id: "GDPR-AUTO-003"
+        requirement: "Right to explanation of automated decision"
+        severity: high
+
+implementation:
+  description: "Technical implementation requirements"
+  controls:
+    - id: "GDPR-IMP-001"
+      requirement: "Implement self-service data access portal"
+      severity: medium
+      
+    - id: "GDPR-IMP-002"
+      requirement: "Implement data export functionality"
+      severity: high
+      
+    - id: "GDPR-IMP-003"
+      requirement: "Implement account deletion workflow"
+      severity: critical
+      
+    - id: "GDPR-IMP-004"
+      requirement: "Log all data subject requests"
+      severity: high

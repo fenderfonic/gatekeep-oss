@@ -1,0 +1,103 @@
+# Security Policies
+# Your organizational security standards
+# Owner: Security Team
+
+version: "2.0"
+last_updated: "2026-01-23"
+
+principles:
+  - "Defense in depth"
+  - "Least privilege"
+  - "Zero trust - verify everything"
+  - "Secrets never in code"
+  - "Encrypt everything"
+
+secrets:
+  prohibited:
+    - "No secrets in code"
+    - "No secrets in git"
+    - "No secrets in logs"
+    - "No secrets in URLs"
+
+  storage:
+    aws:
+      primary: "AWS Secrets Manager"
+      alternative: "Parameter Store (SecureString)"
+    development:
+      method: ".env files (git-ignored)"
+      template: ".env.example"
+
+  rotation: "90 days minimum"
+
+network:
+  home_lab:
+    exposure: "NONE - local network only"
+    access: "VPN required for remote"
+
+  aws:
+    vpc: required
+    security_groups:
+      default_deny: true
+      rules:
+        - "No 0.0.0.0/0 except ALB/CloudFront"
+        - "Document every rule"
+
+    public_exposure:
+      allowed:
+        - "Application Load Balancer"
+        - "CloudFront"
+        - "API Gateway (with auth)"
+      prohibited:
+        - "Direct EC2 public IPs"
+        - "RDS with public access"
+        - "Public S3 buckets (unless CDN)"
+
+encryption:
+  in_transit: "TLS 1.2+ required"
+  at_rest: "Enable for all storage"
+
+authentication:
+  methods:
+    - "OAuth 2.0 / OIDC for users"
+    - "API keys for services (with rotation)"
+    - "IAM roles for AWS resources"
+    - "SSH keys only (no passwords)"
+
+  requirements:
+    - "MFA for production access"
+    - "Session timeout: 15 min idle"
+    - "Failed login lockout: 5 attempts"
+
+authorization:
+  model: "RBAC"
+  principle: "Least privilege"
+
+api_security:
+  authentication: required
+  rate_limiting:
+    enabled: true
+    anonymous: "10/minute"
+    authenticated: "100/minute"
+
+  headers:
+    required:
+      - "X-Content-Type-Options: nosniff"
+      - "X-Frame-Options: DENY"
+      - "Strict-Transport-Security"
+      - "Content-Security-Policy"
+
+  input_validation:
+    - "Validate all inputs"
+    - "Sanitize to prevent injection"
+    - "Limit request size"
+
+dependencies:
+  scanning: "On every build"
+  updates: "Monthly minimum"
+  critical_patches: "Within 7 days"
+
+incident_response:
+  critical: "< 1 hour"
+  high: "< 8 hours"
+  medium: "< 3 days"
+  low: "< 2 weeks"
