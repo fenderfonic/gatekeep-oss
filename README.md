@@ -13,7 +13,7 @@ pipx install gatekeep
 ```
 
 **Alternative installation methods:**
-- `pip install gatekeep` (standard Python package)
+- `pip install gatekeep-ai` (standard Python package)
 - Other package managers (Homebrew, Nix, Snap) — [let us know](https://github.com/fenderfonic/gatekeep-oss/issues) if you'd like us to add support!
 
 ## Quick Start
