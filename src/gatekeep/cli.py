@@ -16,7 +16,7 @@ console = Console()
 
 
 @click.group()
-@click.version_option(package_name="gatekeep")
+@click.version_option(package_name="gatekeep-ai")
 def cli():
     """Gatekeep — AI governance with specialized personas."""
     pass
