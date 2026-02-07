@@ -152,6 +152,27 @@ Gatekeep uses **your** OpenRouter API key — no data leaves your machine, no su
 
 Gatekeep is cheaper because you only pay for what you use, and we're not trying to extract maximum revenue — we're trying to make governance accessible.
 
+## Pairs with LoopForge
+
+[LoopForge](https://github.com/fenderfonic/loopforge) is a typed, auditable state machine for the issue → PR → CI → merge → close lifecycle. Gatekeep governs quality; LoopForge governs order. Together they give you a governed, auditable dev pipeline.
+
+Wire Gatekeep personas into LoopForge's transition hooks to enforce governance at every stage:
+
+```python
+from gatekeep.personas import consult_sync
+from loopforge import LoopService, LoopState
+
+def security_gate(record, previous_state, new_state, trigger):
+    if new_state == LoopState.MERGED:
+        consult_sync("sentinel", f"Review PR {record.pr_url}")
+
+def cost_gate(record, previous_state, new_state, trigger):
+    if new_state == LoopState.PR_CREATED:
+        consult_sync("auditor", f"Cost check for {record.ref}")
+
+service = LoopService(repository=repo, hooks=[security_gate, cost_gate])
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
