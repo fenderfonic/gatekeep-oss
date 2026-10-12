@@ -1,48 +1,9 @@
-# Security Policy
+# Security and data handling
 
-## Reporting a Vulnerability
+Gatekeep is archived and unmaintained. No versions receive security updates, and no response or remediation commitment is offered. Do not use it as a production security or compliance control.
 
-We take security seriously. If you discover a security vulnerability in Gatekeep, please report it responsibly.
+Local YAML loading does not require external inference. AI-backed functionality sends the applicable prompt, formatted policy/standards configuration, user input and supplied context to OpenRouter and the selected model provider. Multi-persona or multi-model workflows can send multiple requests; deployment-plan reviews also include earlier model responses in later requests. An API key does not make processing local or private.
 
-### How to Report
+Do not submit secrets, credentials or sensitive material. Anyone evaluating the historical code should assess external service data handling and protect their API key. The repository does not establish provider retention guarantees or certify regulatory compliance.
 
-**DO NOT** open a public GitHub issue for security vulnerabilities.
-
-Instead, please email security details to the repository maintainers or use GitHub's private vulnerability reporting feature.
-
-### What to Include
-
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Suggested fix (if any)
-
-### Response Timeline
-
-- **Initial Response**: Within 48 hours
-- **Status Update**: Within 7 days
-- **Fix Timeline**: Depends on severity (critical issues prioritized)
-
-## Security Best Practices
-
-When using Gatekeep:
-
-1. **API Keys**: Never commit `.env` files or API keys to version control
-2. **Access Control**: Limit who has access to your OpenRouter API keys
-3. **Slack Tokens**: Rotate Slack tokens regularly
-4. **Updates**: Keep Gatekeep and dependencies up to date
-5. **Governance**: Review and customize governance policies for your organization
-
-## Supported Versions
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x     | :white_check_mark: |
-
-## Known Security Considerations
-
-- API keys are stored in `.env` files (ensure proper file permissions)
-- Slack Socket Mode requires app-level tokens (keep secure)
-- OpenRouter API calls contain your code/questions (review OpenRouter's privacy policy)
-
-Thank you for helping keep Gatekeep secure!
+Model guidance can be incorrect and is not deterministic enforcement. Historical “gate” and “approval” terminology does not provide a security boundary. The preserved code and configuration have not been modernised by this documentation cleanup.
